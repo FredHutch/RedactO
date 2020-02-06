@@ -14,3 +14,7 @@
 - redacto.py - redact/draw on images to hide sensitive information
  
   -- ARGS: base directory, input folder containting JPG(s), output folder(s) for redacted images, JSON bounding area file for redaction locations
+
+- match_sorts_to_ref.py - match the info (date and RS numbers) extracted from scans to the unique sort number in the reference data (very specific to Reid Lab data format)
+
+  -- ARGS: base directory, input CSV file containing extracted data from scanned images, input CSV file containing reference data, output CSV with matched sortiis
