@@ -11,21 +11,23 @@ def match_sorts(ARGS):
     '''
     match extracted RS numbers and dates to reference sort data
     '''
-    extracted = pd.read_csv('{}{}{}'.format(ARGS.dir, os.path.sep, ARGS.data))
+    ext = pd.read_csv('{}{}{}'.format(ARGS.dir, os.path.sep, ARGS.data))
     ref = pd.read_excel('{}{}{}'.format(ARGS.dir, os.path.sep, ARGS.ref))
 
-    def get_ret(row):
+    def get_sort_num_for_ext(row):
         # match sort number IFF the date and at least one of the RS numbers matches
         rs_set = row['RAW_RS_NUM'].upper().split(';') + [row['PROCESSED_RS_NUM'].upper()]
-        print ('{} - {}'.format(row['SortDate'], rs_set))
+        #print ('{} - {}'.format(row['SortDate'], rs_set))
         ret = ref.loc[(ref['SortDate'] == row['SortDate']) & \
             ((ref['RSNumDNA'].isin(rs_set)) | (ref['RSNumKi'].isin(rs_set)))]
-        if len(set(ret['SortNumSD'])) == 1:
-            
-            return ret  
+        
+        if len(set(ret['SortNumSD'])) == 1:            
+            return list(ret['SortNumSD'])[0]
+
     
-    extracted.apply(get_ret, axis=1)   
-    return extracted
+    ext['SortNumSD'] = ext.apply(get_sort_num_for_ext, axis=1)
+    ref2 = pd.merge(ref, ext, how='left', on='SortNumSD')
+    return ext, ref2
 
 
 def parse_arguments(parser):
@@ -44,5 +46,6 @@ def parse_arguments(parser):
 if __name__ == '__main__':
     PARSER = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     ARGS = parse_arguments(PARSER)
-    matched_df = match_sorts(ARGS)
-    matched_df.to_csv('{}{}{}'.format(ARGS.dir, os.path.sep, ARGS.out_f)
+    matched_df, updated_reference = match_sorts(ARGS)
+    matched_df.to_csv('{}{}{}'.format(ARGS.dir, os.path.sep, ARGS.out_f))
+    updated_reference.to_csv('{}{}{}'.format(ARGS.dir, os.path.sep, ARGS.ref[:ARGS.ref.find('.')] + '_updated.csv'))
