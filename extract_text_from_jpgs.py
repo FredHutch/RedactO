@@ -2,6 +2,7 @@ import json
 import sys
 import os
 import re
+import argparse
 
 import boto3
 
@@ -40,7 +41,7 @@ def textract_detect_text_from_jpg(ARGS):
         print (f)
         base_name = f.split('.')[0]
 
-        with open('{}{}{}'.format(ARGS.dir, os.path.sep, ARGS.in_f, os.path.sep f), 'rb') as file:
+        with open('{}{}{}'.format(ARGS.dir, os.path.sep, ARGS.in_f, os.path.sep, f), 'rb') as file:
             image_test = file.read()
             bytes_test = bytearray(image_test)
 
