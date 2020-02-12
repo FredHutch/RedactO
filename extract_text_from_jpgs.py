@@ -26,7 +26,8 @@ def get_aws_client(ARGS):
     '''
     aws account details stored separately in config file 
     '''
-    session = boto3.Session(profile_name=ARGS.config['profile_name'])
+    config = json.load(open(ARGS.config,'r'))
+    session = boto3.Session(profile_name=config['profile_name'])
     client = session.client(
              service_name='textract',
              region_name= 'us-west-1',
@@ -36,16 +37,16 @@ def get_aws_client(ARGS):
     return client
 
 def textract_detect_text_from_jpg(ARGS):
+    client = get_aws_client(ARGS)
     bounding_areas = {}
     # use textract OCR to extract text from jpg images
     for f in os.listdir('{}{}{}'.format(ARGS.dir, os.path.sep, ARGS.in_f)):
         print (f)
         base_name = f.split('.')[0]
 
-        with open('{}{}{}'.format(ARGS.dir, os.path.sep, ARGS.in_f, os.path.sep, f), 'rb') as file:
+        with open('{}{}{}{}{}'.format(ARGS.dir, os.path.sep, ARGS.in_f, os.path.sep, f), 'rb') as file:
             image_test = file.read()
             bytes_test = bytearray(image_test)
-
         response = client.detect_document_text(Document={'Bytes': bytes_test})
         
         #Get the text blocks
