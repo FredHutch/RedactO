@@ -36,6 +36,7 @@ def get_aws_client(ARGS):
     return client
 
 def textract_detect_text_from_jpg(ARGS):
+    bounding_areas = {}
     # use textract OCR to extract text from jpg images
     for f in os.listdir('{}{}{}'.format(ARGS.dir, os.path.sep, ARGS.in_f)):
         print (f)
