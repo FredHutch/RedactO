@@ -21,7 +21,7 @@ def convert_pdf_to_jpgs(ARGS):
 
 def parse_arguments(parser):
     parser.add_argument('--dir', type=str, help='base directory',
-            default='C:/Users/esilgard/Fred Hutchinson Cancer Research Center/Sanchez, Carissa A - sort samples')
+            default='C:/Users/esilgard/Fred Hutchinson Cancer Research Center/Karlsen, Christine A - Flow Sorts, Binders 1 - 20/Binder 21')
     parser.add_argument('--in_f', type=str, help='input folder within directory (defaults to PDF)',
             default='PDF')
     parser.add_argument('--out_f', type=str, help='output folder within direcotry (defaults to JPG)',

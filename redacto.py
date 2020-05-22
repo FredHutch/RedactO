@@ -12,6 +12,9 @@ def redact_bounded_areas(ARGS):
 	-- list of files containing lists of dicts containing bounding areas
 	   (returned from AWS Textract)
 	'''
+	print (ARGS.dir)
+	print (os.path.sep)
+	print(ARGS.bounding)
 	bounding = json.load(open('{}{}{}'.format(ARGS.dir, os.path.sep, ARGS.bounding),'r'))
 	for f_name, bounding_list in bounding.items():
 		print (f_name)
@@ -28,14 +31,14 @@ def redact_bounded_areas(ARGS):
 
 def parse_arguments(parser):
     parser.add_argument('--dir', type=str, help='base directory',
-            default='C:/Users/esilgard/Fred Hutchinson Cancer Research Center/Sanchez, Carissa A - sort samples')
+            default='C:/Users/esilgard/Fred Hutchinson Cancer Research Center/Karlsen, Christine A - Flow Sorts, Binders 1 - 20/Binder 21')
     parser.add_argument('--bounding', type=str, help='name of bounding file - defaults to bounding_areas.json',
             default='bounding_areas.json')
     parser.add_argument('--in_f', type=str, help='input folder containing images (defaults to JPG)',
             default='JPG')
     parser.add_argument('--out_f', type=str, help='output folder *basename* for redacted images (defaults to Redacted \
     	- expects multiple folders for number of redacted areas found (for QA purposes))',
-            default='JPG')
+            default='Redacted')
    
     args = parser.parse_args()
     return args

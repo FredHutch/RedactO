@@ -9,7 +9,7 @@ import boto3
 
 def parse_arguments(parser):
     parser.add_argument('--dir', type=str, help='base directory',
-            default='C:/Users/esilgard/Fred Hutchinson Cancer Research Center/Sanchez, Carissa A - sort samples')
+            default='C:/Users/esilgard/Fred Hutchinson Cancer Research Center/Karlsen, Christine A - Flow Sorts, Binders 1 - 20/Binder 21')
     parser.add_argument('--config', type=str, help='name of config file containing aws account info - defaults to config.json',
             default='config.json')
     parser.add_argument('--in_f', type=str, help='input folder containing images (defaults to JPG)',
@@ -17,7 +17,7 @@ def parse_arguments(parser):
     parser.add_argument('--out_f', type=str, help='output folder for text files (defaults to TXT)',
             default='TXT')
     parser.add_argument('--bounding', type=str, help='name of output bounding file - defaults to bounding_areas.json',
-            default='bounding_areas.json')
+            default='bounding_areas_v2.json')
    
     args = parser.parse_args()
     return args
